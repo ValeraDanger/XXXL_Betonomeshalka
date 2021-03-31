@@ -3,8 +3,8 @@ import cv2
 import time
 import logging, coloredlogs
 import numpy as np
-import betonomeshalka.resheniya as resheniya
-import betonomeshalka.protocol as protocol
+import resheniya
+import protocol
 #import math
 
 #import betonomeshalka.color_recognition.dominator_color_webcam
@@ -68,38 +68,41 @@ while True:
     if (equal_num == 5 and card != None):
         logging.info('Карта принята')
         logging.info(card)
+#        comands = None
         comands = resheniya.desision(card, 'START1')
         logging.info(comands)
-        for i in range(0, len(comands), 2):
-            corner = -int(comands[i])
-            comand = 'C' + str(-corner) + '\n'
-            logging.info("команда " + comand)
-            protocol.send_command(comand)
-            enc = 0
-            if (corner != 0):
-                circle_lenth = 122
-                wheel_lenth = 28
+        if (comands != None):
+
+            for i in range(0, len(comands), 2):
+                corner = -int(comands[i])
+                comand = 'C' + str(-corner) + '\n'
+                logging.info("команда " + comand)
+                protocol.send_command(comand)
+                enc = 0
+                if (corner != 0):
+                    circle_lenth = 122
+                    wheel_lenth = 28
+                    answer, last_enc, sost = protocol.check_sost()
+                    protocol.send_command('C90\n')
+                    while (abs(circle_lenth*corner/360) > (enc-last_enc)/4/360*wheel_lenth):
+                        answer, enc, sost = protocol.check_sost()
+                        #logging.info(enc)
+                        logging.info("bred")
+                        # logging.info('Ответ {0}'.format(answer))
+                        # logging.info('Состояние {0}'.format(sost))
+                        # logging.info('Энкодер {0}'.format(enc))
+                enc = 0
+                logging.info(str(i) + ' команда')
+                protocol.send_command('C0\n')
                 answer, last_enc, sost = protocol.check_sost()
-                protocol.send_command('C90\n')
-                while (abs(circle_lenth*corner/360) > (enc-last_enc)/4/360*wheel_lenth):
+                while (int(comands[i+1])*2.5 > (enc-last_enc)/4/360*wheel_lenth):
+                    logging.info("ENC: {0}".format(enc-last_enc))
                     answer, enc, sost = protocol.check_sost()
-                    #logging.info(enc)
-                    logging.info("bred")
                     # logging.info('Ответ {0}'.format(answer))
                     # logging.info('Состояние {0}'.format(sost))
                     # logging.info('Энкодер {0}'.format(enc))
-            enc = 0
-            logging.info(str(i) + ' команда')
-            protocol.send_command('C0\n')
-            answer, last_enc, sost = protocol.check_sost()
-            while (int(comands[i+1])*2.5 > (enc-last_enc)/4/360*wheel_lenth):
-                logging.info("ENC: {0}".format(enc-last_enc))
-                answer, enc, sost = protocol.check_sost()
-                # logging.info('Ответ {0}'.format(answer))
-                # logging.info('Состояние {0}'.format(sost))
-                # logging.info('Энкодер {0}'.format(enc))
-            protocol.send_command('#\n')
-            logging.info('Стоп')
+                protocol.send_command('#\n')
+                logging.info('Стоп')
 
 
  #       for i in range(0, len(comands), 2):

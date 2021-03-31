@@ -4,22 +4,13 @@ Created on Thu Mar 25 14:44:14 2021
 
 @author: student
 """
-import betonomeshalka.classes as classes
+import classes as classes
 import time
 
 
-def desision(card, start_point):
-    comands = 0
-    exit_code = 0
-    #задаем старт
-    start = start_point
-    #Здесь мы передаём наши цифры, знаки и т.п.
+def desision(end, start_point):
 
-    #карточка
-    comand = card
-    end = comand
-
-    comands = classes.my_programm(start, end)
+    comands = classes.my_programm(start_point, end)
     if (comands != None):
         #print(comands)
         #for i in range(0, len(comands), 2):
@@ -42,4 +33,3 @@ def desision(card, start_point):
             #print(a)
            # print(b)
         return comands
-#desision('Y2', 'START1')

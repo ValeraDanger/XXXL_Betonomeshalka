@@ -4,8 +4,8 @@ import cv2
 import time
 import logging, coloredlogs
 import numpy as np
-import betonomeshalka.resheniya as resheniya
-import betonomeshalka.protocol as protocol
+import resheniya as resheniya
+import protocol as protocol
 import math
 
 #import betonomeshalka.color_recognition.dominator_color_webcam
@@ -66,7 +66,7 @@ while True:
     if (last_card == card and card != None):
         equal_num += 1
         logging.info('{0} из 15'.format(equal_num))
-    if (equal_num == 10 and card != None):
+    if (equal_num == 4 and card != None):
         logging.info('Карта принята')
         logging.info(card)
         comands = resheniya.desision(card, 'START1')

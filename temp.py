@@ -1,3 +1,2 @@
-import sys 
-import 
+import sys
 print(sys.path)

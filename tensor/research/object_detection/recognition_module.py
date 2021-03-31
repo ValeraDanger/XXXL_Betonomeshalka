@@ -26,7 +26,7 @@ import sys
 import time
 import logging, coloredlogs
 from threading import Thread
-import betonomeshalka.color_recognition.dominator_color_webcam as color_recognition
+import color_recognition.dominator_color_webcam as color_recognition
 
 # This is needed since the notebook is stored in the object_detection folder.
 sys.path.append("..")
@@ -114,7 +114,7 @@ class ThreadedCamera(object):
     def __init__(self, src=0):
         self.capture = cv2.VideoCapture(src)
         self.capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
-        self.capture.set(cv2.CAP_PROP_EXPOSURE, -6)
+        self.capture.set(cv2.CAP_PROP_EXPOSURE, 6)
         self.width = 640
         self.height = 480
         self.capture.set(3, self.width)

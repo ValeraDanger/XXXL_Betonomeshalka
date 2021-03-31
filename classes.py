@@ -165,69 +165,69 @@ graph = {
     'F2': ['T21'],
 }
 
-# поиск пути
-way = []
-class Graph:
 
-    def __init__(self, vertices):
-        # Нет. вершин
-        self.V = vertices
-
-        # словарь по умолчанию для хранения графа
-        self.graph = defaultdict(list)
-
-    # функция добавления ребра в граф
-    def addEdge(self, u, v):
-        self.graph[u].append(v)
-
-    '''Рекурсивная функция для печати всех путей от 'u' до 'd'.
-    visit [] отслеживает вершины в текущем пути.
-    path [] хранит актуальные вершины, а path_index является текущим
-    индексом в path[]'''
-
-    def printAllPathsUtil(self, u, d, visited, path):
-
-        # Пометить текущий узел как посещенный и сохранить в path
-        visited[list(self.graph.keys()).index(u)] = True
-        path.append(u)
-
-        # Если текущая вершина совпадает с точкой назначения, то
-        # print(current path[])
-        if u == d:
-            way.append(path.copy())
-#            print(path)
-
-            
-        else:
-            # Если текущая вершина не является пунктом назначения
-            # Повторить для всех вершин, смежных с этой вершиной
-            for i in self.graph[u]:
-                if visited[list(self.graph.keys()).index(i)] == False:
-                    self.printAllPathsUtil(i, d, visited, path)
-
-        # Удалить текущую вершину из path[] и пометить ее как непосещенную
-        path.pop()
-        visited[list(self.graph.keys()).index(u)] = False
-        return way
-        
-
-    # Печатает все пути от 's' до 'd'
-    def printAllPaths(self, s, d):
-
-        # Отметить все вершины как не посещенные
-        visited = [False] * (self.V)
-
-        # Создать массив для хранения путей
-        global path
-        path = []
-
-        # Рекурсивный вызов вспомогательной функции печати всех путей
-        t = self.printAllPathsUtil(s, d, visited, path)
-        return t
-    
 # исполнение
 
 def my_programm(start, end):
+    # поиск пути
+    way = []
+
+    class Graph:
+
+        def __init__(self, vertices):
+            # Нет. вершин
+            self.V = vertices
+
+            # словарь по умолчанию для хранения графа
+            self.graph = defaultdict(list)
+
+        # функция добавления ребра в граф
+        def addEdge(self, u, v):
+            self.graph[u].append(v)
+
+        '''Рекурсивная функция для печати всех путей от 'u' до 'd'.
+        visit [] отслеживает вершины в текущем пути.
+        path [] хранит актуальные вершины, а path_index является текущим
+        индексом в path[]'''
+
+        def printAllPathsUtil(self, u, d, visited, path):
+
+            # Пометить текущий узел как посещенный и сохранить в path
+            visited[list(self.graph.keys()).index(u)] = True
+            path.append(u)
+
+            # Если текущая вершина совпадает с точкой назначения, то
+            # print(current path[])
+            if u == d:
+                way.append(path.copy())
+            #            print(path)
+
+            else:
+                # Если текущая вершина не является пунктом назначения
+                # Повторить для всех вершин, смежных с этой вершиной
+                for i in self.graph[u]:
+                    if visited[list(self.graph.keys()).index(i)] == False:
+                        self.printAllPathsUtil(i, d, visited, path)
+
+            # Удалить текущую вершину из path[] и пометить ее как непосещенную
+            path.pop()
+            visited[list(self.graph.keys()).index(u)] = False
+            return way
+
+        # Печатает все пути от 's' до 'd'
+        def printAllPaths(self, s, d):
+
+            # Отметить все вершины как не посещенные
+            visited = [False] * (self.V)
+
+            # Создать массив для хранения путей
+            # global path
+            path = []
+
+            # Рекурсивный вызов вспомогательной функции печати всех путей
+            t = self.printAllPathsUtil(s, d, visited, path)
+            return t
+
     comands = 0
     our_corner = 0
 #    start = 'START1'
@@ -262,30 +262,29 @@ def my_programm(start, end):
     for i in range(0, len(ways)):
         little.append(len(ways[i]))
     needed_way = []
-    if (len(little)):
-        needed_way = np.argmin(little)
-        needed_way = ways[needed_way]
-        print(needed_way)
+    needed_way = np.argmin(little)
+    needed_way = ways[needed_way]
+    print(needed_way)
 
-        for i in range(0, len(needed_way)-1):
-            m = find_points(needed_way[i], needed_way[i+1])
-            start = mass[m[0]].coords
-            end = mass[m[1]].coords
-            a = end[0]-start[0]
-            b = end[1]-start[1]
-            corner = math.atan2(a, b)
-            corner = math.degrees(corner)
-            lengh = (start[0]-end[0])**2+(start[1]-end[1])**2
-            lengh = math.sqrt(lengh)
-            current = mass[m[1]].name
-            needed_corner = corner - our_corner
-            do.append(needed_corner)
-            do.append(lengh)
+    for i in range(0, len(needed_way)-1):
+        m = find_points(needed_way[i], needed_way[i+1])
+        start = mass[m[0]].coords
+        end = mass[m[1]].coords
+        a = end[0]-start[0]
+        b = end[1]-start[1]
+        corner = math.atan2(a, b)
+        corner = math.degrees(corner)
+        lengh = (start[0]-end[0])**2+(start[1]-end[1])**2
+        lengh = math.sqrt(lengh)
+        current = mass[m[1]].name
+        needed_corner = corner - our_corner
+        do.append(needed_corner)
+        do.append(lengh)
 
-            our_corner = corner
+        our_corner = corner
 
-        comands = do
-        return comands
+    comands = do
+    return comands
 
 #comands = my_programm()
 #print(comands)

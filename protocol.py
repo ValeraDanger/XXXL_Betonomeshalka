@@ -4,7 +4,7 @@ import logging, coloredlogs
 coloredlogs.install(level='DEBUG')
 logging.basicConfig(level=logging.DEBUG)
 try:
-    ser = serial.Serial(port='COM3', baudrate=115200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0)
+    ser = serial.Serial(port='COM53', baudrate=115200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0)
     logging.info('Сериал инициализирован')
     print(ser.readline())
 except:
