@@ -1,6 +1,4 @@
 import serial
-import time
-import pprint
 import logging, coloredlogs
 
 coloredlogs.install(level='DEBUG')

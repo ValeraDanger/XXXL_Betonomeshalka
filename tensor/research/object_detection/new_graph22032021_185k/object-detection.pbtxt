@@ -1,0 +1,76 @@
+item {
+  id: 1
+  name: "1" 
+}
+
+item {
+  id: 2 
+  name: "2" 
+}
+
+item {
+  id: 3
+  name: "3" 
+}
+
+item {
+  id: 4
+  name: "4" 
+}
+
+item {
+  id: 5
+  name: "5" 
+}
+
+item {
+  id: 6
+  name: "6" 
+}
+
+item {
+  id: 7
+  name: "7" 
+}
+
+item {
+  id: 8
+  name: "8" 
+}
+
+item {
+  id: 9
+  name: "9" 
+}
+
+item {
+  id: 10
+  name: "red_l" 
+}
+
+item {
+  id: 11
+  name: "green_l" 
+}
+
+item {
+  id: 12
+  name: "yellow_l" 
+}
+
+item {
+  id: 13
+  name: "yield" 
+}
+
+item {
+  id: 14
+  name: "circle" 
+}
+
+item {
+  id: 15
+  name: "main_road" 
+}
+
+
