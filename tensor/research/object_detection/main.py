@@ -91,9 +91,9 @@ while True:
                         answer, enc, sost = protocol.check_sost()
                         logging.info(enc)
                         logging.info("bred")
-                        # logging.info('Ответ {0}'.format(answer))
-                        # logging.info('Состояние {0}'.format(sost))
-                        # logging.info('Энкодер {0}'.format(enc))
+                protocol.send_command('#\n')
+                while (sost != "waitingCommand"):
+                    answer, enc, sost = protocol.check_sost()
                 enc = 0
                 logging.info(str(i) + ' команда')
                 protocol.send_command('C0\n')
@@ -105,8 +105,8 @@ while True:
                     # logging.info('Состояние {0}'.format(sost))
                     # logging.info('Энкодер {0}'.format(enc))
                 protocol.send_command('#\n')
-                logging.info('Стоп')
-
+                while (sost != "waitingCommand"):
+                    answer, enc, sost = protocol.check_sost()
 
  #       for i in range(0, len(comands), 2):
   #          while (exit_code != 'OK'):
