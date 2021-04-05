@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 22 13:53:51 2021
+Created on Mon Mar 22 13:53:51 2077
 
-@author: student
+@author: я что похож на автора? (author ne_oleg)
 """
 
 from collections import defaultdict
@@ -11,7 +11,7 @@ from io import StringIO
 import numpy as np
 import math
 
-# создание класса точек, где храниться вся информация о них
+# данный класс используется для создания точек и хранения информации об их координатах
 class Points(object):
     
     def __init__(self,name, coords):
@@ -24,14 +24,14 @@ class Points(object):
     def name(name):
         return name
     
-# массив со всеми точками
-mass = [
-        #старты
+# массив, хранящий в себе точки из класса Points
+graph_coords = [
+        # старты
         Points('START1', [28, 26]),
         Points('STAR1', [28, 102]),
         Points('START2', [770, 265]),
         Points('STAR2', [770, 190]),
-        #круговой движ
+        # круговой движение
         Points('D1', [715, 168]),
         Points('C11', [702, 116]),
         Points('C12', [718, 78]),
@@ -46,7 +46,7 @@ mass = [
         Points('C24', [182, 62]),
         Points('C25', [132, 33]),
         Points('C26', [83, 63]),
-        #перекрёстки
+        # перекрёстки
         Points('P11', [373, 447]),
         Points('P12', [422, 447]),
         Points('P13', [373, 390]),
@@ -56,7 +56,7 @@ mass = [
         Points('P22', [374, 62]),
         Points('P23', [422, 112]),
         Points('P24', [372, 112]),
-        #дорога снаружи
+        # дорога снаружи
         Points('G1', [83, 228]),
         Points('G3', [83, 301]),
         Points('T11', [83, 412]),
@@ -70,7 +70,7 @@ mass = [
         Points('B2', [718, 324]),
         Points('S2', [543, 62]),
         Points('S1', [252, 62]),
-        #дорга внутри
+        # дорга внутри
         Points('S3', [252, 112]),
         Points('S4', [544, 112]),
         Points('B3', [662, 228]),
@@ -85,12 +85,12 @@ mass = [
         Points('T21', [132, 360]),
         Points('G4', [132, 300]),
         Points('G2', [132, 228]),
-        #дорога между
+        # дорога между
         Points('Y1', [373, 228]),
         Points('Y3', [373, 302]),
         Points('Y2', [422, 228]),
         Points('Y4', [422, 303]),
-        #финиши
+        # финиши
         Points('F11', [25, 448]),
         Points('F12', [25, 395]),
         Points('F21', [768, 447]),
@@ -98,14 +98,15 @@ mass = [
         ]  
 
 
-# исполнение
+# Данный массив хранит в себе теже точки, что и массив graph_coords,
+# за одним исключением - в него внесены не координаты, а вершины, до которых можно добраться из каждой конкретной точки графа
 graph = {
-#старты
+    # старты
     'START1': ['STAR1'],
     'STAR1': ['C21'],
 	'START2': ['STAR2'],
     'STAR2': ['D1'],
-#круговой движ
+    # круговой движ P.S. круговое движение
     'D1': ['C11'],
     'C11': ['C12'],
     'C12': ['C13'],
@@ -120,7 +121,7 @@ graph = {
     'C24': ['C25'],
 	'C25': ['C26'],
     'C26': ['C21'],
-#перекрёстки
+    # перекрёстки
     'P11': ['P12'],
     'P12': ['O3'],
     'P13': ['R2'],
@@ -130,7 +131,7 @@ graph = {
     'P22': ['S1'],
     'P23': ['S4'],
     'P24': ['Y1', 'P23'],
-#дорога снаружи
+    # дорога снаружи
     'G1': ['G3'],
     'G3': ['T11'],
     'T11': ['T12'],
@@ -144,7 +145,7 @@ graph = {
     'B2': ['D1'],
     'S2': ['P21'],
     'S1': ['C24'],
-#дорга внутри
+    # дорга внутри
     'S3': ['P24'],
     'S4': ['C15'],
     'B3': ['B1'],
@@ -159,12 +160,12 @@ graph = {
     'T21': ['G4'],
     'G4': ['G2'],
     'G2': ['C22'],
-#дорога между
+    # дорога между
     'Y1': ['Y3'],
     'Y3': ['P13'],
     'Y2': ['P23'],
     'Y4': ['Y2'],
-#финиши
+    # финиши
     'F11': ['T12', 'F12'],
     'F12': ['F11'],
     'F21': ['T31', 'F22'],
@@ -172,9 +173,10 @@ graph = {
 }
 
 def my_programm(start, end):
-    # поиск пути
+    # Здесь, а именно 43 строками ниже, производиться поиск наикротчайшего пути
+    # way - хранит путь, а вы хотели услышать что-то иное?
     way = []
-
+    # класс Graph преобразкет наш массив graph и ищет с его помощью наикратчайший путь
     class Graph:
 
         def __init__(self, vertices):
@@ -228,8 +230,8 @@ def my_programm(start, end):
             path = []
 
             # Рекурсивный вызов вспомогательной функции печати всех путей
-            t = self.printAllPathsUtil(s, d, visited, path)
-            return t
+            way = self.printAllPathsUtil(s, d, visited, path)
+            return way
 
     comands = 0
     our_corner = 0
@@ -248,46 +250,49 @@ def my_programm(start, end):
     
     ways = classes_put(start, end)
     
-    #    print(ways)
-    
+    # print(ways)
+    # Данная функция совмещает два наших массива, а имменно находит id-шники элементов из массива graph и отдаёт их во власть graph_coords
     def find_points(name_start, name_end):
-        m = []
-        for i in range(0, len(mass)):
-            id = mass[i].name
+        for i in range(0, len(graph_coords)):
+            id = graph_coords[i].name
             if id == name_start:
                 id_start = i
             if id == name_end:
                 id_end = i
         m = [id_start, id_end]
         return m
-
+    # Здесь мы находим наикротчайший путь среди тех, что получены от класса Graph
     little = []
     for i in range(0, len(ways)):
         little.append(len(ways[i]))
     needed_way = []
-    needed_way = np.argmin(little)
-    needed_way = ways[needed_way]
-    print(needed_way)
+    if little != []:
+        needed_way = np.argmin(little)
+        needed_way = ways[needed_way]
+        print(needed_way)
 
-    for i in range(0, len(needed_way)-1):
-        m = find_points(needed_way[i], needed_way[i+1])
-        start = mass[m[0]].coords
-        end = mass[m[1]].coords
-        a = end[0]-start[0]
-        b = end[1]-start[1]
-        corner = math.atan2(a, b)
-        corner = math.degrees(corner)
-        lengh = (start[0]-end[0])**2+(start[1]-end[1])**2
-        lengh = math.sqrt(lengh)
-        current = mass[m[1]].name
-        needed_corner = corner - our_corner
-        do.append(needed_corner)
-        do.append(lengh)
+        #Это переводит наш путь в понятные для человека и робота команды
+        for i in range(0, len(needed_way)-1):
+            m = find_points(needed_way[i], needed_way[i+1])
+            start = graph_coords[m[0]].coords
+            end = graph_coords[m[1]].coords
+            a = end[0]-start[0]
+            b = end[1]-start[1]
+            corner = math.atan2(a, b)
+            corner = math.degrees(corner)
+            lengh = (start[0]-end[0])**2+(start[1]-end[1])**2
+            lengh = math.sqrt(lengh)
+            current = graph_coords[m[1]].name
+            needed_corner = corner - our_corner
+            do.append(needed_corner)
+            do.append(lengh)
 
-        our_corner = corner
+            our_corner = corner
 
-    comands = do
-    return comands
+        comands = do
+        return comands
+    else:
+        return None
 
 #comands = my_programm()
 #print(comands)
@@ -314,3 +319,30 @@ def my_programm(start, end):
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Thank you Peter XXXelich
+    ###########   ###########
+ ##############################
+################################
+ ##############################
+  ############################
+    #########################
+      ####################
+          ############
+            #######
+              ###

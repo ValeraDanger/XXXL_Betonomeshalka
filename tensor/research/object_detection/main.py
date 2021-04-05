@@ -3,8 +3,8 @@ import cv2
 import time
 import logging, coloredlogs
 import numpy as np
-import betonomeshalka.resheniya as resheniya
-import betonomeshalka.protocol as protocol
+import classes as classes
+import protocol as protocol
 import math
 
 #import betonomeshalka.color_recognition.dominator_color_webcam
@@ -68,7 +68,9 @@ while True:
     if (equal_num == 5 and card != None):
         logging.info('Карта принята')
         logging.info(card)
-        comands = resheniya.desision(card, 'START1')
+        comands = classes.my_programm("START1", card)
+        if comands == None:
+            break
         logging.info(comands)
         if (comands != None):
             for i in range(0, len(comands), 2):
